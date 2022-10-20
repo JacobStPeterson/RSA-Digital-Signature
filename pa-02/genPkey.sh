@@ -11,13 +11,13 @@ echo
 # Generate  2048-bit public/private key-pair for Amal
 cd amal
 rm -f *.pem 
-openssl genpkey      .... missing stuff goes here
-openssl rsa     -in  .... missing stuff goes here
+openssl genpkey -algorithm RSA -out amal_priv_key.pem -pkeyopt rsa_keygen_bits:2048
+openssl rsa     -in  amal_priv_key.pem -pubout -out amal_pub_key.pem
 
 echo "====================================="
 echo "Here is Amal's RSA Key Information"
 echo "====================================="
-openssl  .... missing stuff goes here
+openssl  rsa -text -in amal_priv_key.pem
 echo
 echo "====================================="
 
