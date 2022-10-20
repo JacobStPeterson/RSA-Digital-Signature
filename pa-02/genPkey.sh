@@ -24,7 +24,7 @@ echo "====================================="
 # Now, share Amal's public key with Basim using Linux Symbolic Links
 cd ../basim
 rm -f *.pem
-ln -s  ../amal/amal_pub_key.pem  amal_pubKey.pem
+ln -s  ../amal/amal_priv_key.pem  amal_pub_key.pem
 
 #back to dispatcher's folder
-cd ..
+cd ../

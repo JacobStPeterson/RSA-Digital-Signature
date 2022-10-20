@@ -30,7 +30,7 @@ void handleErrors( char *msg)
 // Returns size of the cipher text in bytes
 
 unsigned encrypt( uint8_t *pPlainText, unsigned plainText_len, 
-             uint8_t *key, uint8_t *iv, uint8_t *pCipherText )
+             const uint8_t *key, const uint8_t *iv, uint8_t *pCipherText )
 {
 	int status;
 	unsigned len=0, encryptedLen=0;
@@ -75,7 +75,7 @@ unsigned encrypt( uint8_t *pPlainText, unsigned plainText_len,
 // Returns size of the decrypted text in bytes
 
 unsigned decrypt( uint8_t *pCipherText, unsigned cipherText_len, 
-                  uint8_t *key, uint8_t *iv, uint8_t *pDecryptedText)
+                  const uint8_t *key, const uint8_t *iv, uint8_t *pDecryptedText)
 {
 	int status;
 	unsigned len=0, decryptedLen=0;
@@ -117,7 +117,11 @@ unsigned decrypt( uint8_t *pCipherText, unsigned cipherText_len,
 // PA-01
 //***********************************************************************
 
-int encryptFile( int fd_in, int fd_out, unsigned char *key, unsigned char *iv )
+static unsigned char plaintext [ PLAINTEXT_LEN_MAX ],
+                     ciphertext [ CIPHER_LEN_MAX ],
+                     decryptext[ DECRYPTED_LEN_MAX ];
+
+int encryptFile( int fd_in, int fd_out, const uint8_t *key, const uint8_t *iv )
 {
 	int status;
 	unsigned len=0, bytes=0, sumLen=0;
@@ -157,7 +161,7 @@ int encryptFile( int fd_in, int fd_out, unsigned char *key, unsigned char *iv )
 }
 
 //-----------------------------------------------------------------------------
-int decryptFile( int fd_in, int fd_out, unsigned char *key, unsigned char *iv )
+int decryptFile( int fd_in, int fd_out, const uint8_t *key, const uint8_t *iv )
 {
 	int status;
 	unsigned len=0, bytes=0, sumLen=0;
@@ -211,11 +215,11 @@ RSA *getRSAfromFile(char * filename, int public)
     // else read a private RSA key into 'rsa'. Use PEM_read_RSAPrivateKey()
 	if(public)
 	{
-		rsa = PEM_read_RSA_PUBKEY(file, NULL, NULL, NULL);
+		rsa = PEM_read_RSA_PUBKEY(file, &rsa, NULL, NULL);
 	}
 	else
 	{
-		rsa = PEM_read_RSAPrivateKey(file, NULL, NULL, NULL);
+		rsa = PEM_read_RSAPrivateKey(file, &rsa, NULL, NULL);
 	}
 	// close the binary file 'filename'
 	fclose(file);
@@ -233,8 +237,8 @@ size_t fileDigest( int fd_in , int fd_out , uint8_t *digest )
 // file to 'fd_out'
 // Returns actual size in bytes of the computed hash (a.k.a. digest value)
 {	
-	unsigned int md_len;
-	unsigned char buffer[ INPUT_CHUNK ];
+	unsigned int md_len = 0;
+	static uint8_t buffer[ INPUT_CHUNK ];
 	
 	// Use EVP_MD_CTX_create() to create new hashing context
 	EVP_MD_CTX *mdctx = EVP_MD_CTX_create();
@@ -243,22 +247,25 @@ size_t fileDigest( int fd_in , int fd_out , uint8_t *digest )
 	// the EVP_sha256() hashing function 
 	EVP_DigestInit(mdctx, EVP_sha256());
 
+    printf("\nah shit.\n");
 	/* Loop until end-of input file */
-    while ( 1 )
+    while (  read(fd_in, buffer, INPUT_CHUNK) > 0 )
     {
-        // read( fd_in, ...  , INPUT_CHUNK );
-		// read() returns bytes read
-		if(read(fd_in, buffer, INPUT_CHUNK) == 0)
-		{
-			break;
-		}
-
+        //printf("%d\n", read(fd_in, buffer, INPUT_CHUNK));
 		// Use EVP_DigestUpdate() to hash the data you read
-		EVP_DigestUpdate(mdctx, buffer, sizeof(buffer));
+		EVP_DigestUpdate(mdctx, buffer, INPUT_CHUNK);
+        printf ("hello");
         if ( fd_out > 0 )
+        {
             // write the data you just read to fd_out
-			write(fd_out, buffer, INPUT_CHUNK);
+			if (write(fd_out, buffer, INPUT_CHUNK) != INPUT_CHUNK)
+            {
+                EVP_MD_CTX_destroy(mdctx);
+                handleErrors ("fileDigest: wrote incorrect input chunk\n");
+            }
+        }
     }
+    printf ("\nWe made it out of the hood boys\n");
 
     // Finialize the hash calculation using EVP_DigestFinal() directly
 	// into the 'digest' array
