@@ -5,7 +5,7 @@ FILE:   myCrypto.c
 
 Written By: 
      1- Jessy Bradshaw
-     2-
+     2- Jacob Peterson
      
 Submitted on: 
 ----------------------------------------------------------------------------*/
@@ -230,6 +230,9 @@ RSA *getRSAfromFile(char * filename, int public)
 // PA-02
 //***********************************************************************
 
+/*
+  fd_out = fd_data
+ */
 size_t fileDigest( int fd_in , int fd_out , uint8_t *digest )
 // Read all the incoming data stream from 'fd_in' file descriptor
 // Compute the SHA256 hash value of this incoming data into the array 'digest'
@@ -238,7 +241,8 @@ size_t fileDigest( int fd_in , int fd_out , uint8_t *digest )
 // Returns actual size in bytes of the computed hash (a.k.a. digest value)
 {	
 	unsigned int md_len = 0;
-	static uint8_t buffer[ INPUT_CHUNK ];
+	uint8_t buffer[ INPUT_CHUNK ];
+	size_t bytesRead;
 	
 	// Use EVP_MD_CTX_create() to create new hashing context
 	EVP_MD_CTX *mdctx = EVP_MD_CTX_create();
@@ -247,25 +251,19 @@ size_t fileDigest( int fd_in , int fd_out , uint8_t *digest )
 	// the EVP_sha256() hashing function 
 	EVP_DigestInit(mdctx, EVP_sha256());
 
-    printf("\nah shit.\n");
 	/* Loop until end-of input file */
-    while (  read(fd_in, buffer, INPUT_CHUNK) > 0 )
+	// Store bytesread to prevent overshooting the last digestupdate
+	// note: write breaks on the last read when bytesRead is small
+        // sizeofbuffer -1, leave room for terminating null character
+    while (  (bytesRead = read(fd_in, buffer, sizeof(buffer) )) > 0 )
     {
-        //printf("%d\n", read(fd_in, buffer, INPUT_CHUNK));
+
 		// Use EVP_DigestUpdate() to hash the data you read
-		EVP_DigestUpdate(mdctx, buffer, INPUT_CHUNK);
-        printf ("hello");
+		EVP_DigestUpdate(mdctx, buffer, bytesRead  );
+
         if ( fd_out > 0 )
-        {
-            // write the data you just read to fd_out
-			if (write(fd_out, buffer, INPUT_CHUNK) != INPUT_CHUNK)
-            {
-                EVP_MD_CTX_destroy(mdctx);
-                handleErrors ("fileDigest: wrote incorrect input chunk\n");
-            }
-        }
+    		write(fd_out, (const void*) buffer, bytesRead );
     }
-    printf ("\nWe made it out of the hood boys\n");
 
     // Finialize the hash calculation using EVP_DigestFinal() directly
 	// into the 'digest' array
@@ -278,5 +276,3 @@ size_t fileDigest( int fd_in , int fd_out , uint8_t *digest )
     // return the length of the computed digest in bytes ;
 	return md_len;
 }
-
-

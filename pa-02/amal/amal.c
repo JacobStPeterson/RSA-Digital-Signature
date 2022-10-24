@@ -47,30 +47,35 @@ int main ( int argc , char * argv[] )
         { fprintf ( stderr, "Amal: Failed to open plaintext file\n"); exit(-1);}
 
     // print info to log
-    fprintf (log, "Amal : I will send digest tot FD %d and file to FD %d\n",fd_ctrl, fd_data);
+    fprintf (log, "Amal : I will send digest to FD %d and file to FD %d\n",fd_ctrl, fd_data);
     fprintf (log, "Amal : Starting to digest the input file\n");
+
+	//fflush(log);
 
     // perform hash
 	mdLen   = fileDigest( fd_in , fd_data , digest ) ;  // also dump file to Basim
-    printf ("\n1\n");
+    //printf ("\n1\n");
     // print info thats in the digest
-    fprintf (log, "Amal : Here is the digest of the file:\n");
+    fprintf (log, "\nAmal : Here is the digest of the file:\n");
     BIO_dump_fp (log, (const char*) digest, mdLen);
 
     // create a digital signature by encrypting the hash with Amal's private key
-    uint8_t *encrypt_hash = malloc (mdLen);
-    int en_len = RSA_private_encrypt(mdLen, digest, encrypt_hash, amals_priv_key, RSA_NO_PADDING);
+    // note to self: add a null terminating character to end
+    uint8_t *encrypt_hash = calloc (RSA_size(amals_priv_key) + 1, sizeof(uint8_t));
+    int en_len = RSA_private_encrypt(mdLen, digest, encrypt_hash, amals_priv_key, RSA_PKCS1_PADDING);
 
     // print encrypted hash
-    fprintf (log, "Amal: Here is my signature on the file:\n");
+    fprintf (log, "\nAmal: Here is my signature on the file:\n");
     BIO_dump_fp (log, (const char*) encrypt_hash, en_len);
 
-    // send digital signature to basim
-    write (fd_ctrl, encrypt_hash, en_len);
+    // send digital signature via the control file descriptor
+    write (fd_ctrl,(const void*)encrypt_hash,(size_t)en_len);
 
     // Clean up the crypto library
     RSA_free( amals_priv_key  ) ;
     free (encrypt_hash);
     close(fd_in);
+    close(fd_ctrl);
+    close(fd_data);
     fclose(log);
 }
