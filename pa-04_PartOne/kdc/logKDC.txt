@@ -1,0 +1,60 @@
+
+This is the KDC's Code by Jessy Bradshaw and Jacob Peterson
+
+Logged in as user 'bradshjk' on Sun Nov  6 19:04:55 2022
+
+<readFr. Amal> FD=7 , <sendTo Amal> FD=10
+
+Amal has this Master Ka { key, IV }
+    0000 - b6 0f a3 be 4e fd eb a6-bc fe 7f 1b 3a 3f ff d8   ....N.......:?..
+    0010 - dc ea d1 9b a5 1c d2 c2-69 6f 7d c5 af bb 1b 7a   ........io}....z
+
+    0000 - 57 4c ed ec 59 54 34 09-5c 5b fa 17 1f 7a 8a 0c   WL..YT4.\[...z..
+
+Basim has this Master Ka { key, IV }
+    0000 - be 2c 69 33 aa 59 f4 c0-3c da b0 4a b3 e7 b0 28   .,i3.Y..<..J...(
+    0010 - b9 f7 10 c9 a5 2d 56 32-ee a3 f9 00 e6 69 6a 20   .....-V2.....ij 
+
+    0000 - 9b 25 18 b4 ed 90 f2 5d-37 2a 5c 09 78 88 11 60   .%.....]7*\.x..`
+
+    Plaintext Ticket (65 Bytes) is
+    0000 - 9d 82 6f 4c ca 2a 6e 7b-de 45 29 b6 35 a6 f5 5b   ..oL.*n{.E).5..[
+    0010 - 73 2e 69 c1 e0 43 78 30-71 2f e4 17 5c 55 42 66   s.i..Cx0q/..\UBf
+    0020 - c8 34 2e 26 55 f3 d8 22-9c 53 a5 e0 f3 d1 0a bd   .4.&U..".S......
+    0030 - 0d 00 00 00 41 6d 61 6c-20 69 73 20 48 6f 70 65   ....Amal is Hope
+    0040 - 00                                                .
+
+This is the new MSG2 ( 155 Bytes ) before Encryption:
+    Ks { key + IV } (48 Bytes) is:
+    0000 - 9d 82 6f 4c ca 2a 6e 7b-de 45 29 b6 35 a6 f5 5b   ..oL.*n{.E).5..[
+    0010 - 73 2e 69 c1 e0 43 78 30-71 2f e4 17 5c 55 42 66   s.i..Cx0q/..\UBf
+    0020 - c8 34 2e 26 55 f3 d8 22-9c 53 a5 e0 f3 d1 0a bd   .4.&U..".S......
+
+    IDb (15 Bytes) is:
+    0000 - 42 61 73 69 6d 20 69 73-20 53 6d 69 6c 79 00      Basim is Smily.
+
+    Na (4 Bytes) is:
+    0000 - 32 b7 47 57                                       2.GW
+
+    Encrypted Ticket (80 Bytes) is
+    0000 - 5c 55 42 66 c8 34 2e 26-55 f3 d8 22 9c 53 a5 e0   \UBf.4.&U..".S..
+    0010 - f3 d1 0a bd 0f 00 00 00-42 61 73 69 6d 20 69 73   ........Basim is
+    0020 - 20 53 6d 69 6c 79 00 32-b7 47 57 9b 00 00 00 2f    Smily.2.GW..../
+    0030 - 2b 08 4c 77 97 dd 3e e4-e1 62 66 19 43 fd 86 9f   +.Lw..>..bf.C...
+    0040 - 31 89 c3 90 db fb 87 52-0f be 5e 54 6f 65 d5 74   1......R..^Toe.t
+
+The following new Encrypted MSG2 ( 160 bytes ) has been created by MSG2_new():  
+    0000 - 11 c4 58 0f 8a 37 96 da-18 af b6 fa cf 0f f1 d6   ..X..7..........
+    0010 - 44 29 d0 26 2a 35 c0 39-9d c2 01 7f 1d a2 f9 aa   D).&*5.9........
+    0020 - 3d 84 2c 31 83 02 51 7c-dd 4e 96 d8 f7 ed db 9d   =.,1..Q|.N......
+    0030 - 6f 76 3d 7e 8b e3 9e 00-f6 09 56 ea 23 28 a5 d4   ov=~......V.#(..
+    0040 - 4f b0 8f 45 81 dd 2b a9-e3 bc 5b b4 89 ae 54 82   O..E..+...[...T.
+    0050 - b8 4f 35 ae d8 ec 6b e3-6f 69 2e c7 dd 25 84 58   .O5...k.oi...%.X
+    0060 - ac 6a a8 15 52 ab cf b8-5b 47 76 9f 92 22 68 3b   .j..R...[Gv.."h;
+    0070 - 33 64 71 d2 b2 5e 85 a8-02 ac 9b ec f6 ae ff 63   3dq..^.........c
+    0080 - d9 4a c8 b0 c3 64 dc e9-72 fa 31 57 c3 cb 34 38   .J...d..r.1W..48
+    0090 - 3f 23 57 23 48 ae b5 6f-ca 30 e3 be 68 1a d8 34   ?#W#H..o.0..h..4
+
+The KDC sent the above Encrypted MSG2 to FD=10 Successfully
+
+The KDC has terminated normally. Goodbye

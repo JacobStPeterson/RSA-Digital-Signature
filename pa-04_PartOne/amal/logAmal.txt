@@ -1,0 +1,45 @@
+
+This is Amal's REFERENCE Code by ABOUTABL.
+
+Logged in as user 'bradshjk' on Sun Nov  6 19:04:55 2022
+
+<readFr. KDC> FD=9 , <sendTo KDC> FD=8 , <readFr. Basim> FD=5 , <sendTo Basim> FD=4
+
+Amal has this Master Ka { key , IV }
+    0000 - b6 0f a3 be 4e fd eb a6-bc fe 7f 1b 3a 3f ff d8   ....N.......:?..
+    0010 - dc ea d1 9b a5 1c d2 c2-69 6f 7d c5 af bb 1b 7a   ........io}....z
+
+    0000 - 57 4c ed ec 59 54 34 09-5c 5b fa 17 1f 7a 8a 0c   WL..YT4.\[...z..
+
+The following Encrypted MSG2 ( 160 bytes ) has been received from FD 9 Successfully
+    0000 - 11 c4 58 0f 8a 37 96 da-18 af b6 fa cf 0f f1 d6   ..X..7..........
+    0010 - 44 29 d0 26 2a 35 c0 39-9d c2 01 7f 1d a2 f9 aa   D).&*5.9........
+    0020 - 3d 84 2c 31 83 02 51 7c-dd 4e 96 d8 f7 ed db 9d   =.,1..Q|.N......
+    0030 - 6f 76 3d 7e 8b e3 9e 00-f6 09 56 ea 23 28 a5 d4   ov=~......V.#(..
+    0040 - 4f b0 8f 45 81 dd 2b a9-e3 bc 5b b4 89 ae 54 82   O..E..+...[...T.
+    0050 - b8 4f 35 ae d8 ec 6b e3-6f 69 2e c7 dd 25 84 58   .O5...k.oi...%.X
+    0060 - ac 6a a8 15 52 ab cf b8-5b 47 76 9f 92 22 68 3b   .j..R...[Gv.."h;
+    0070 - 33 64 71 d2 b2 5e 85 a8-02 ac 9b ec f6 ae ff 63   3dq..^.........c
+    0080 - d9 4a c8 b0 c3 64 dc e9-72 fa 31 57 c3 cb 34 38   .J...d..r.1W..48
+    0090 - 3f 23 57 23 48 ae b5 6f-ca 30 e3 be 68 1a d8 34   ?#W#H..o.0..h..4
+
+Amal received the following in MSG 2 from the KDC
+    Ks { Key , IV } (48 Bytes ) is:
+    0000 - 00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00   ................
+    0010 - 00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00   ................
+    0020 - 00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00   ................
+
+    IDb (26 Bytes):   ..... MISMATCH .. but NOT Exiting
+    0000 - 2c 4d 33 2e 32 2e 30 2c-4d 31 31 2e 31 2e 30 0a   ,M3.2.0,M11.1.0.
+    0010 - 75 69 2c 20 54 68 69 65-21 00                     ui, Thie!.
+
+    This is my nonce Na (4 bytes) I sent in MSG1:
+    0000 - dc f2 28 dc                                       ..(.
+
+    Received Copy of Na (4 bytes):    ..... INVALID ... but NOT Exiting
+    0000 - 00 00 00 00                                       ....
+
+    Encrypted Ticket (0 bytes):
+
+
+Amal has terminated normally. Goodbye

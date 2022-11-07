@@ -1,0 +1,15 @@
+
+This is Basim's REFERENCE Code by ABOUTABL
+
+Logged in as user 'aboutams' on Sun Oct 30 18:30:21 2022
+
+<readFr. Amal> FD=7 , <sendTo Amal> FD=10
+
+Basim has this Master Kb { key , IV }
+    0000 - 06 15 5b 4b 67 71 7a 49-e7 a9 2f 11 1b 1f 06 78   ..[KgqzI../....x
+    0010 - 3c 18 e5 fd 69 7e f7 a3-c5 dc 02 97 5d 31 41 95   <...i~......]1A.
+
+    0000 - ab a5 24 7b f1 e0 d8 2d-7c a6 41 e4 1d 3d 9e e9   ..${...-|.A..=..
+
+
+Basim has terminated normally. Goodbye

@@ -1,0 +1,49 @@
+
+This is Amal's REFERENCE Code by ABOUTABL.
+
+Logged in as user 'aboutams' on Sun Oct 30 18:30:21 2022
+
+<readFr. KDC> FD=5 , <sendTo KDC> FD=4 , <readFr. Basim> FD=9 , <sendTo Basim> FD=8
+
+Amal has this Master Ka { key , IV }
+    0000 - c3 0c fd 31 2b 11 11 ac-ae 60 b0 ec 37 7f 7b 18   ...1+....`..7.{.
+    0010 - 7c 33 9d f8 04 e5 f2 2a-3f 8b 0f fb 65 4a a6 0d   |3.....*?...eJ..
+
+    0000 - 85 a0 49 af 81 35 77 6d-8a 7b e2 56 29 c0 16 aa   ..I..5wm.{.V)...
+
+The following Encrypted MSG2 ( 160 bytes ) has been received from FD 5 Successfully
+    0000 - 7d 65 3f ad 0d 19 22 3e-2f cd 1a 18 8a 02 96 06   }e?...">/.......
+    0010 - bb d1 a5 64 10 97 0d 9b-9b a1 db 03 a4 db b8 29   ...d...........)
+    0020 - 63 90 87 71 dc ca 22 7f-1c 83 c4 35 0f 74 d6 31   c..q.."....5.t.1
+    0030 - e3 61 9a d4 08 e3 66 f4-05 89 cb fd 34 34 ad b6   .a....f.....44..
+    0040 - e2 c9 aa a7 c5 41 44 89-2d 73 26 9e d7 d9 92 92   .....AD.-s&.....
+    0050 - 30 a1 b8 45 0e e1 9d e2-a1 2e 6c 4d 3d f3 49 ef   0..E......lM=.I.
+    0060 - 18 f5 78 4e b7 8a 73 a8-a5 3b cb 85 79 12 78 1d   ..xN..s..;..y.x.
+    0070 - a4 02 48 54 04 7c fb 3b-b3 d5 d4 df 09 6e bb 51   ..HT.|.;.....n.Q
+    0080 - 69 a7 26 02 c8 ba c9 4f-4d 6c 54 cb 7f fe c9 93   i.&....OMlT.....
+    0090 - 91 8c a0 a3 ae ec 48 46-9a 54 eb 55 d8 d5 b9 ff   ......HF.T.U....
+
+Amal received the following in MSG 2 from the KDC
+    Ks { Key , IV } (48 Bytes ) is:
+    0000 - 30 db 1a 41 a3 4f 4f 91-4b 9d fc 8b 43 55 30 c5   0..A.OO.K...CU0.
+    0010 - b2 5d 5c 08 04 b3 3c c6-41 b8 f0 30 18 3f 5e 9f   .]\...<.A..0.?^.
+    0020 - 31 b1 67 68 2b db b8 c2-98 51 bf 98 78 49 0c 26   1.gh+....Q..xI.&
+
+    IDb (15 Bytes):   ..... MATCH
+    0000 - 42 61 73 69 6d 20 69 73-20 53 6d 69 6c 79 00      Basim is Smily.
+
+    This is my nonce Na (4 bytes) I sent in MSG1:
+    0000 - 1d 8b 48 0a                                       ..H.
+
+    Received Copy of Na (4 bytes):    ..... INVALID ... but NOT Exiting
+    0000 - 5c 21 6d 5b                                       \!m[
+
+    Encrypted Ticket (80 bytes):
+    0000 - 7f 93 a4 6e 3c 7f 66 c3-ac 75 76 cb c7 c0 f1 91   ...n<.f..uv.....
+    0010 - 99 65 41 6e 6e dd 66 ae-da e6 06 12 8c 80 05 3b   .eAnn.f........;
+    0020 - cb 50 b8 57 59 d6 ac 33-1b e2 f8 5e cf a0 bb 5b   .P.WY..3...^...[
+    0030 - 6e 26 61 03 b5 bd bd 03-9a 90 f5 65 b9 8e 86 8f   n&a........e....
+    0040 - 58 27 1e fc 55 a1 ba 18-84 42 fa 44 45 16 e4 c1   X'..U....B.DE...
+
+
+Amal has terminated normally. Goodbye
