@@ -36,10 +36,10 @@ int main ( int argc , char * argv[] )
         exit(-1) ;
     }
 
-    fd_K2A    = atoi(argv[1])   // Read from KDC    File Descriptor
-    fd_A2K    = atoi(argv[2])   // Send to   KDC    File Descriptor
-    fd_B2A    = atoi(argv[3])   // Read from Basim  File Descriptor
-    fd_A2B    = atoi(argv[4])   // Send to   Basim  File Descriptor
+    fd_K2A    = atoi(argv[1]);   // Read from KDC    File Descriptor
+    fd_A2K    = atoi(argv[2]);  // Send to   KDC    File Descriptor
+    fd_B2A    = atoi(argv[3]);   // Read from Basim  File Descriptor
+    fd_A2B    = atoi(argv[4]);   // Send to   Basim  File Descriptor
 
     log = fopen("amal/logAmal.txt" , "w" );
     if( ! log )
@@ -106,7 +106,7 @@ int main ( int argc , char * argv[] )
     fprintf( log , "    IDb (%u Bytes):" , lenIDb ) ;
 
     // Verify the strings IDb = IDb2 both in legth and content
-    if( /* the IDb and IDb2 strings are different  */ )
+    if(strncmp(IDb, IDb2, lenIDb) != 0)
         fprintf( log , "   ..... MISMATCH .. but NOT Exiting\n" );
     else
         fprintf( log , "   ..... MATCH\n" );
@@ -118,7 +118,7 @@ int main ( int argc , char * argv[] )
 
     fprintf( log , "    Received Copy of Na (%lu bytes):" , NONCELEN ) ;
     // Verify Na == NaCpy    
-    if(  /* ....  */  )
+    if(Na == NaCpy)
         fprintf( log , "    ..... VALID )\n" ) ;
     else
         fprintf( log , "    ..... INVALID ... but NOT Exiting\n" ) ;
@@ -126,7 +126,7 @@ int main ( int argc , char * argv[] )
     BIO_dump_indent_fp ( log , (const char *) &NaCpy , NONCELEN , 4 ) ;  fprintf( log , "\n") ; 
 
     fprintf( log , "    Encrypted Ticket (%d bytes):\n" , lenTktCipher ) ;
-    BIO_dump_indent_fp ( log , /* ...  */ );       fprintf( log , "\n") ;
+    BIO_dump_indent_fp ( log , (const char *) tktCipher, lenTktCipher, 4 );       fprintf( log , "\n") ;
 
     free( IDb2 ) ;  // It was allocated memory by MSG2_receive()
     fflush( log ) ;

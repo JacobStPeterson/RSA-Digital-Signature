@@ -257,6 +257,8 @@ unsigned MSG2_new( FILE *log , uint8_t **msg2, const myKey_t *Ka , const myKey_t
         printf ("myCrypto : Out of Memory allocating for TktPlain in MSG2_new");
     }
 
+
+
     // 'p' is a temp pointer used to access segments of the TktPlain buffer
     uint8_t  *p = TktPlain ;      
     memcpy( p , Ks , KEYSIZE ) ;                        p += KEYSIZE ;
@@ -264,6 +266,8 @@ unsigned MSG2_new( FILE *log , uint8_t **msg2, const myKey_t *Ka , const myKey_t
     unsigned *lenPtr ;    
     lenPtr = (unsigned *) p  ;   *lenPtr = LenA ;       p += LENSIZE ;
     memcpy( p , IDa , LenA );
+
+
 
 
     fprintf( log ,"    Plaintext Ticket (%u Bytes) is\n" , tktPlainLen);
@@ -289,13 +293,15 @@ unsigned MSG2_new( FILE *log , uint8_t **msg2, const myKey_t *Ka , const myKey_t
         exitError( "\nPlaintext of MSG2 is too big in MSG2_new\n" );
     }
 
-    uint8_t *plaintext = malloc(lenMsg2Plain);
+    uint8_t *platext = (uint8_t *) malloc(lenMsg2Plain);
     // Fill in Msg2 Plaintext:  Ks || L(IDb) || IDb  || Na || lenTktCipher) || TktCipher
 
     // Reuse the moving pointer 'p' , but now to contsruct plaintext of MSG2
     fprintf( log ,"This is the new MSG2 ( %u Bytes ) before Encryption:\n" , lenMsg2Plain);
 
-    *p = plaintext;
+
+
+    p = platext;
 
     // Ks
     memcpy (p, Ks, KEYSIZE);
@@ -323,15 +329,18 @@ unsigned MSG2_new( FILE *log , uint8_t **msg2, const myKey_t *Ka , const myKey_t
     p += NONCELEN;
 
     //  L(TktCipher) || TktChipher 
-    lenPtr = (unsigned *) p ;   *lenPtr = lenMsg2Plain;    p += LENSIZE ;
+    lenPtr = (unsigned *) p ;   *lenPtr = lenTktCipher;    p += LENSIZE ;
     memcpy (p, bCipherText, lenTktCipher);
+
+
+
 
     fprintf( log ,"    Encrypted Ticket (%u Bytes) is\n" , lenTktCipher );
     BIO_dump_indent_fp ( log , p , lenTktCipher , 4 ) ;  fprintf( log , "\n") ;
 
     // Now, encrypt Message 2 using Ka
     uint8_t *ciphertext = (uint8_t * ) malloc (CIPHER_LEN_MAX);
-    unsigned LenMsg2 = encrypt( plaintext , lenMsg2Plain, Ka->key, Ka->iv, ciphertext);
+    unsigned LenMsg2 = encrypt( platext , lenMsg2Plain, Ka->key, Ka->iv, ciphertext);
 
     *msg2 = malloc( LenMsg2 ) ;
     if( *msg2 == NULL ) 
@@ -365,8 +374,7 @@ void MSG2_receive( FILE *log , int fd , const myKey_t *Ka , myKey_t *Ks, char **
     unsigned  msg2CipherLen ;    
     unsigned *lenPtr ;    
     unsigned  LenB  ; 
-    uint8_t *ciphertext;  
-printf ("\n\n\n love \n\n\n");
+    uint8_t *ciphtext;  
 
     if ( log == NULL || Ka == NULL || Ks == NULL || IDb == NULL || 
          Na == NULL || lenTktCipher == NULL || tktCipher == NULL )  
@@ -377,7 +385,7 @@ printf ("\n\n\n love \n\n\n");
     }
 
     // Read Len(Message 2)
-    if (read( fd , &msg2CipherLen , LENSIZE  ) !=  LENSIZE  )
+    if (read( fd , &msg2CipherLen, LENSIZE  ) != LENSIZE )
     {
         fprintf( log , "Unable to read all %lu bytes of Len(MSG2) from FD %d in "
                        "MSG2_receive() ... EXITING\n" , LENSIZE , fd );
@@ -385,7 +393,7 @@ printf ("\n\n\n love \n\n\n");
         exitError( "" );
     }
 
-    if ( msg2CipherLen > CIPHER_LEN_MAX  )  
+    if ( msg2CipherLen > CIPHER_LEN_MAX )  
     {
         fprintf( log , "Encrypted MSG2 is too big %u bytes( max is %u ) in MSG2_receive() "
                        " ... EXITING\n" , msg2CipherLen , CIPHER_LEN_MAX );
@@ -395,7 +403,8 @@ printf ("\n\n\n love \n\n\n");
     }
 
     // Now read MSG2 itself
-    if ( read(fd, ciphertext, msg2CipherLen) != msg2CipherLen )  
+    ciphtext = malloc (CIPHER_LEN_MAX);
+    if ( read(fd, ciphtext, msg2CipherLen) != msg2CipherLen )  
     {
         fprintf( log , "Unable to read all %u bytes of encrypted MSG2 from FD %d in MSG2_receive() "
                        "... EXITING\n" , msg2CipherLen , fd ) ;
@@ -405,13 +414,13 @@ printf ("\n\n\n love \n\n\n");
 
     fprintf( log ,"The following Encrypted MSG2 ( %u bytes ) has been received from FD %d Successfully\n" 
                  , msg2CipherLen , fd );
-    BIO_dump_indent_fp( log , ciphertext , msg2CipherLen , 4 ) ;   fprintf( log , "\n");
+    BIO_dump_indent_fp( log , ciphtext , msg2CipherLen , 4 ) ;   fprintf( log , "\n");
     fflush( log ) ;
 
     // Decrypt  MSG2 using Ka
     unsigned msg2Len ;
     uint8_t *plaintext = malloc (PLAINTEXT_LEN_MAX);
-    msg2Len = decrypt(ciphertext, msg2CipherLen, Ka->key, Ka->iv, plaintext) ;
+    msg2Len = decrypt(ciphtext, msg2CipherLen, Ka->key, Ka->iv, plaintext) ;
     if (  msg2Len > DECRYPTED_LEN_MAX )  
     {
         fprintf( log , "Dercypted text of MSG2 is too big %u bytes( max is %u ) in MSG2_receive()"

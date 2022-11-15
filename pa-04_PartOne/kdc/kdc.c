@@ -64,7 +64,7 @@ int main ( int argc , char * argv[] )
     myKey_t  *Kb = (myKey_t *) malloc (KEYSIZE);    // Basim's master key with the KDC
     if (getMasterKeyFromFiles( "kdc/basimKey.bin" , "kdc/basimIV.bin", Kb) == 0)
         fprintf (log , "KDC : failed to open basims keys");
-    fprintf (log, "\nBasim has this Master Ka { key, IV }\n");
+    fprintf (log, "\nBasim has this Master Kb { key, IV }\n");
     BIO_dump_indent_fp (log, Kb->key, SYMMETRIC_KEY_LEN, 4);
     fprintf (log, "\n");
     BIO_dump_indent_fp (log, Kb->iv, INITVECTOR_LEN, 4);
@@ -78,7 +78,7 @@ int main ( int argc , char * argv[] )
     // ****       in lieu of receiving MSG1          **********
 
     char *IDa = "Amal is Hope", *IDb = "Basim is Smily" ;
-    Nonce_t  Na ;
+    Nonce_t  Na;
     RAND_bytes( (unsigned char *) Na , NONCELEN  );  // First Nonce by A
 
     // ***********************************************************
