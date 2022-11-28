@@ -1,0 +1,76 @@
+
+This is the KDC's REFERENCE Code by <<ABOUTABL>>
+
+<readFr. Amal> FD=3 , <sendTo Amal> FD=6
+
+Amal has this Master Ka { key , IV }
+    0000 - 65 a1 c0 bd 3a b4 6e f8-21 97 c4 b5 44 ea 05 94   e...:.n.!...D...
+    0010 - 54 e3 a6 bb b5 8e e5 ec-e6 56 5f 69 99 11 7f 18   T........V_i....
+
+    0000 - 68 53 a6 cb 26 bd 67 a0-b2 e8 8e e9 eb 88 2b ad   hS..&.g.......+.
+
+Basim has this Master Kb { key , IV }
+    0000 - 6c 2d 0f 87 4f e8 72 e7-ca 01 43 2e 24 ef 0f 62   l-..O.r...C.$..b
+    0010 - e9 f7 1c 06 6a 1b 0e 87-df e3 3c c5 62 99 a8 a0   ....j.....<.b...
+
+    0000 - e7 f6 fb dd ff 08 89 e0-da 58 03 1e 35 5c 7a 63   .........X..5\zc
+
+
+**************************
+         MSG1 Receive
+**************************
+
+MSG1 ( 46 bytes ) has been received on FD 3 by MSG1_receive():
+
+KDC received message 1 from Amal on FD 3 with
+    IDa ='Madaah El-Amar' , IDb = 'Haseebak Liz-Zaman'
+    Na ( 4 Bytes ) is
+    0000 - ae 63 05 16                                       .c..
+
+
+**************************
+         MSG2 New
+**************************
+
+Plaintext Ticket (67 Bytes) is
+    0000 - 3f d9 b2 19 c2 80 fd 9e-2f 70 4c c1 ca 7a a8 fd   ?......./pL..z..
+    0010 - df c9 a7 05 77 ac d5 4d-41 36 27 06 a2 fd 67 1b   ....w..MA6'...g.
+    0020 - 8f 92 23 9c 10 80 e7 ab-9b d9 7d c8 f5 99 90 a3   ..#.......}.....
+    0030 - 0f 00 00 00 4d 61 64 61-61 68 20 45 6c 2d 41 6d   ....Madaah El-Am
+    0040 - 61 72 00                                          ar.
+
+The following new Encrypted MSG2 ( 160 bytes ) has been created by MSG2_new():  
+    0000 - 9f 2d b9 06 f8 bd 7e 90-5f 61 67 86 1b 36 c7 5b   .-....~._ag..6.[
+    0010 - 4e de fc 51 57 97 1e af-bd 54 fc b0 cb e0 ff d8   N..QW....T......
+    0020 - c8 7f 1d ce 0f bd 26 16-9a 5f 58 00 6f b2 e3 1d   ......&.._X.o...
+    0030 - e2 71 6b 18 c9 2c 01 c3-c7 62 cf 7b ef cb 65 34   .qk..,...b.{..e4
+    0040 - e9 30 37 6a f2 aa c2 b1-d6 60 5c e3 bd 63 c2 63   .07j.....`\..c.c
+    0050 - 0f a3 90 3b 34 8b 06 b4-31 31 b0 de 10 52 9a 2c   ...;4...11...R.,
+    0060 - 69 a4 48 97 31 e6 1e 30-52 44 aa 4e 69 46 5a f0   i.H.1..0RD.NiFZ.
+    0070 - f1 47 6a 7d b1 86 af 9b-a9 68 60 0a 73 bd c0 e0   .Gj}.....h`.s...
+    0080 - b3 a1 18 51 a1 9e 59 7e-53 c7 31 8e 55 ab ee ff   ...Q..Y~S.1.U...
+    0090 - 9d 5a e4 0d e1 72 4e 4a-1b 51 8b f7 cf 23 f2 22   .Z...rNJ.Q...#."
+
+This is the new MSG2 ( 159 Bytes ) before Encryption:
+    Ks { key + IV } (48 Bytes) is:
+    0000 - 3f d9 b2 19 c2 80 fd 9e-2f 70 4c c1 ca 7a a8 fd   ?......./pL..z..
+    0010 - df c9 a7 05 77 ac d5 4d-41 36 27 06 a2 fd 67 1b   ....w..MA6'...g.
+    0020 - 8f 92 23 9c 10 80 e7 ab-9b d9 7d c8 f5 99 90 a3   ..#.......}.....
+
+    IDb (19 Bytes) is:
+    0000 - 48 61 73 65 65 62 61 6b-20 4c 69 7a 2d 5a 61 6d   Haseebak Liz-Zam
+    0010 - 61 6e 00                                          an.
+
+    Na (4 Bytes) is:
+    0000 - ae 63 05 16                                       .c..
+
+    Encrypted Ticket (80 Bytes) is
+    0000 - ae b1 7f b7 95 b5 e4 69-9d 19 ca c1 66 41 3f 79   .......i....fA?y
+    0010 - 77 15 b5 0d fa a1 5d 5c-d4 75 ad 69 95 dc b9 eb   w.....]\.u.i....
+    0020 - 1b a2 d9 85 8c 23 46 df-e9 fb 93 dd c4 c8 1f 0d   .....#F.........
+    0030 - 37 a1 29 44 0d ba 15 da-aa 32 a4 74 aa bd c8 99   7.)D.....2.t....
+    0040 - 04 9a 23 75 2c 0a 4b 71-0e 9a ae 9a 93 1a ce ae   ..#u,.Kq........
+
+The KDC sent the above Encrypted MSG2 ( 160 bytes ) via FD=6 Successfully
+
+The KDC has terminated normally. Goodbye
